@@ -1874,18 +1874,21 @@ class CephManager:
                                                 "initialized.  "
                                                 "Check ipmi config.")
             remote.console.power_off()
-        elif self.config.get('bdev_inject_crash'):
-            self.raw_cluster_cmd(
-                '--', 'tell', 'osd.%d' % osd,
-                'injectargs',
-                '--bdev-inject-crash %d' % self.config.get('bdev_inject_crash'),
-            )
-            try:
-                self.ctx.daemons.get_daemon('osd', osd).wait()
-            except:
-                pass
+        elif self.config.get('bdev_inject_crash') and self.config.get('bdev_inject_crash_probability'):
+            if random.uniform(0, 1) < self.config.get('bdev_inject_crash_probability'):
+                self.raw_cluster_cmd(
+                    '--', 'tell', 'osd.%d' % osd,
+                    'injectargs',
+                    '--bdev-inject-crash %d' % self.config.get('bdev_inject_crash'),
+                )
+                try:
+                    self.ctx.daemons.get_daemon('osd', osd).wait()
+                except:
+                    pass
+                else:
+                    raise RuntimeError('osd.%s did not fail' % osd)
             else:
-                raise RuntimeError('osd.%s did not fail' % osd)
+                self.ctx.daemons.get_daemon('osd', osd).stop()
         else:
             self.ctx.daemons.get_daemon('osd', osd, self.cluster).stop()
 
