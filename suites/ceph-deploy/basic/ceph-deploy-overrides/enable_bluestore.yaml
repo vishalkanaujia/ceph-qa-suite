@@ -1,3 +1,15 @@
 overrides:
-   ceph-deploy:
-      bluestore: yes
+  ceph:
+    conf:
+      osd:
+        osd objectstore: bluestore
+        bluestore block size: 96636764160
+        debug bluestore: 30
+        debug bdev: 40
+        debug bluefs: 20
+        debug rocksdb: 10
+        enable experimental unrecoverable data corrupting features: "*"
+        osd debug randomize hobject sort order: false
+        bluestore bluefs env mirror: true
+  ceph-deploy:
+    bluestore: yes
