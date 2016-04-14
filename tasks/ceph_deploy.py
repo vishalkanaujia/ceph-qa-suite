@@ -387,7 +387,7 @@ def build_ceph_cluster(ctx, config):
         log.info('Stopping ceph...')
         ctx.cluster.run(args=['sudo', 'stop', 'ceph-all', run.Raw('||'),
                               'sudo', 'service', 'ceph', 'stop', run.Raw('||'),
-                              'sudo', 'systemctl', 'stop', 'ceph.target'])
+                              'sudo', 'systemctl', 'stop', 'ceph.service'])
 
         # Are you really not running anymore?
         # try first with the init tooling
