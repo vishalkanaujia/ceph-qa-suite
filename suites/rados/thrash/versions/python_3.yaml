@@ -1,0 +1,5 @@
+tasks:
+- exec:
+    all:
+      - 'sudo apt-get -y --force-yes install python3 || (sudo yum -y install epel-release && sudo yum -y install python34)'
+      - 'sudo sed -i -e "1s,^\(#!/usr/bin.*python\)[0-9]*$,\13," /usr/bin/ceph'
