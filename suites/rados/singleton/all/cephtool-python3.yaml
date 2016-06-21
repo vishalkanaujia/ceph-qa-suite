@@ -14,8 +14,8 @@ tasks:
 - install:
 - exec:
     all:
-      - 'sudo apt-get -y --force-yes install python || sudo yum -y install python'
-      - 'sudo sed -i -e "1s,^\(#!/usr/bin.*python\)[0-9]*$,\12," /usr/bin/ceph'
+      - 'sudo apt-get -y --force-yes install python3 || (sudo yum -y install epel-release && sudo yum -y install python34)'
+      - 'sudo sed -i -e "1s,^\(#!/usr/bin.*python\)[0-9]*$,\13," /usr/bin/ceph'
 - ceph:
     log-whitelist:
     - wrongly marked me down
