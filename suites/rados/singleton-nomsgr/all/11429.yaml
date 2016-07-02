@@ -73,7 +73,7 @@ tasks:
         - osd.2
   - exec:
       osd.0:
-        - sudo grep -c 'load_pgs. skipping PG' /var/log/ceph/ceph-osd.0.log
+        - sudo grep -c 'ignoring unrecognized meta' /var/log/ceph/ceph-osd.0.log
   - ceph_manager.wait_for_clean: null
   - ceph_manager.create_pool:
       args: ['newpool']
