@@ -414,7 +414,12 @@ class Filesystem(MDSCluster):
         self.mon_manager.raw_cluster_cmd("mds", "deactivate", "%d:%d" % (self.id, rank))
 
     def set_max_mds(self, max_mds):
-        self.mon_manager.raw_cluster_cmd("fs", "set", self.name, "max_mds", "%d" % max_mds)
+        self.mon_manager.raw_cluster_cmd("fs", "set", self.name, "max_mds",
+                                         "%d" % max_mds)
+
+    def set_allow_multimds(self):
+        self.mon_manager.raw_cluster_cmd('fs', 'set', self.name, "allow_multimds",
+                                         "true", "--yes-i-really-mean-it")
 
     def get_pgs_per_fs_pool(self):
         """
